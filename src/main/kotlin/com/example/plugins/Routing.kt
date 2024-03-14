@@ -40,14 +40,20 @@ fun Application.module() {
                 null
             ))
         }
+        get("/sub/subpage") {
+            call.respond(FreeMarkerContent(
+                "subpage.ftl",
+                null
+            ))
+        }
         
         staticResources(
             "/static",
             "files"
         ) {
-            exclude { url ->
+            /*exclude { url ->
                 url.path.contains("secret")
-            }
+            }*/
         }
     }
 }
