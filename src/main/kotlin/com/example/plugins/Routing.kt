@@ -1,6 +1,8 @@
 package com.example.plugins
 
 import freemarker.cache.ClassTemplateLoader
+import freemarker.cache.MultiTemplateLoader
+import freemarker.cache.TemplateLoader
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.freemarker.*
@@ -23,8 +25,18 @@ fun Application.module() {
         }
     }
     
+
+
     install(FreeMarker) {
-        templateLoader = ClassTemplateLoader(this::class.java.classLoader, "templates")
+        val loaders = arrayOf<TemplateLoader>(
+            ClassTemplateLoader(
+                this::class.java.classLoader, "templates"
+            ),
+            ClassTemplateLoader(
+                this::class.java.classLoader, "templates2"
+            )
+        )
+        templateLoader = MultiTemplateLoader(loaders)
     }
     
     routing {
@@ -34,13 +46,8 @@ fun Application.module() {
                 null
             ))
         }
-        get("/article") {
-            call.respond(FreeMarkerContent(
-                "article.ftl",
-                null
-            ))
-        }
-        get("/sub/subpage") {
+
+        get("/sub") {
             call.respond(FreeMarkerContent(
                 "subpage.ftl",
                 null

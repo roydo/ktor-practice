@@ -2,6 +2,6 @@
 <html>
 <@template.head pagetitle="Subpage" />
     <body>
-        <h1>This is sub directory's page!</h1>
+        <h1>template2!</h1>
     </body>
 </html>
